@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
+import { URL } from "../../Constants/api";
 
 import Logo from "../../olx-logo.png";
 import "./Signup.css";
 
+import { useHistory } from "react-router-dom";
+
 export default function Signup() {
+  let history = useHistory();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
-   async const  handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username);
+    //validate the user inputs here.
+    let userDetails = { username, email, password, phone };
+    try {
+      await axios.post(`${URL}/signup`, userDetails);
+
+      history.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div>
