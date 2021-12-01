@@ -5,7 +5,7 @@ import { URL } from "../../Constants/api";
 import Logo from "../../olx-logo.png";
 import "./Signup.css";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 export default function Signup() {
   let history = useHistory();
@@ -82,7 +82,11 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a>Login</a>
+        <a>
+          <Link style={{ textDecoration: "none" }} to="/login">
+            Login
+          </Link>
+        </a>
       </div>
     </div>
   );

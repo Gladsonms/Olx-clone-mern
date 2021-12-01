@@ -41,6 +41,21 @@ const registerUser = async (req, res) => {
   }
 };
 //LOGIN OF USER
+const logginIn = (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.json(false);
+    }
+    jwt.verify(token, process.env.JWT_SCERT);
+    res.send({ status: true });
+  } catch (error) {
+    res.send({ status: false });
+  }
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -76,4 +91,4 @@ const loginUser = async (req, res) => {
     console.log(error);
   }
 };
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, logginIn };
