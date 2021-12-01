@@ -36,4 +36,4 @@ app.use(
 
 //set user Router
 
-app.use("/", userRouter);
+app.use("/users", userRouter);

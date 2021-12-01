@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <Router>
-        <Route exact="" path="/">
+        <Route exact path="/">
           <Home />
         </Route>
         <Route path="/signup">

@@ -19,7 +19,7 @@ export default function Signup() {
     //validate the user inputs here.
     let userDetails = { username, email, password, phone };
     try {
-      await axios.post(`${URL}/signup`, userDetails);
+      await axios.post(`${URL}/users/signup`, userDetails);
 
       history.push("/login");
     } catch (error) {
