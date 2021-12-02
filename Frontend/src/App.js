@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
+import CreatePage from "./Pages/Create";
 /**
  * ?  =====Import Components=====
  */
@@ -30,6 +31,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/create">
+            <CreatePage />
           </Route>
 
           {/* <Route path="/login">{loggedIn == true ? <Home /> : <Login />}</Route> */}

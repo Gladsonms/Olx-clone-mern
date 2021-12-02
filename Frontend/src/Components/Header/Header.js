@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import "./Header.css";
 import OlxLogo from "../../assets/OlxLogo";
@@ -6,7 +7,6 @@ import Search from "../../assets/Search";
 import Arrow from "../../assets/Arrow";
 import SellButton from "../../assets/SellButton";
 import SellButtonPlus from "../../assets/SellButtonPlus";
-import { Link } from "react-router-dom";
 
 import AuthContext from "../../Context/AuthContext";
 import { URL } from "../../Constants/api";
@@ -18,8 +18,10 @@ function Header() {
   console.log("loggedin", loggedIn.status);
 
   const logOutUser = () => {
+    console.log("___________");
     try {
       localStorage.removeItem("token");
+      window.location.reload();
 
       // await axios.post(`${URL}/users/logout`);
       // getLoggedIn();
@@ -85,13 +87,17 @@ function Header() {
           )}
         </div>
 
-        <div className="sellMenu">
-          <SellButton></SellButton>
-          <div className="sellMenuContent">
-            <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
-          </div>
-        </div>
+        {loggedIn.status && (
+          <Link to="/create">
+            <div className="sellMenu">
+              <SellButton></SellButton>
+              <div className="sellMenuContent">
+                <SellButtonPlus></SellButtonPlus>
+                <span>SELL</span>
+              </div>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );

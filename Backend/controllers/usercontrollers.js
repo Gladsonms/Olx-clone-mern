@@ -1,4 +1,5 @@
 const User = require("../Modals/User");
+const Product = require("../Modals/Product");
 const Mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { response } = require("express");
@@ -59,8 +60,6 @@ const logginIn = (req, res) => {
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
-    console.log(email);
-    console.log(password);
     if (!email || !password) {
       return res
         .status(400)
@@ -97,10 +96,34 @@ const getLogoutUser = (req, res) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHaeder;
-    console.log("_____________");
+
     res.json({ logout: true });
   } catch (error) {
     console.error(error);
   }
 };
-module.exports = { registerUser, loginUser, logginIn, getLogoutUser };
+const createPost = async (req, res) => {
+  const { name, category, price } = req.body;
+  try {
+    if (!name || !category || !price) {
+      return res
+        .status(400)
+        .json({ errorMessage: "Please enter all required fiels" });
+    }
+    const newPost = new Product({
+      product: name,
+      category,
+      price,
+    });
+    const savedProduct = await newPost.save();
+  } catch (error) {
+    console.error(error);
+  }
+};
+module.exports = {
+  registerUser,
+  loginUser,
+  logginIn,
+  getLogoutUser,
+  createPost,
+};
