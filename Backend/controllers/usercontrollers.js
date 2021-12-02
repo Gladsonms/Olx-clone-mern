@@ -91,4 +91,16 @@ const loginUser = async (req, res) => {
     console.log(error);
   }
 };
-module.exports = { registerUser, loginUser, logginIn };
+
+//logiut user
+const getLogoutUser = (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHaeder;
+    console.log("_____________");
+    res.json({ logout: true });
+  } catch (error) {
+    console.error(error);
+  }
+};
+module.exports = { registerUser, loginUser, logginIn, getLogoutUser };

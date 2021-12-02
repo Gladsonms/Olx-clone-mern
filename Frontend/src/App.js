@@ -12,10 +12,10 @@ import AuthContext from "./Context/AuthContext";
 
 function App() {
   const { loggedIn } = useContext(AuthContext);
-  useEffect(() => {
-    console.log("loggedin-----------");
-    console.log(loggedIn);
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   console.log("loggedin-----------");
+  //   console.log(loggedIn);
+  // }, [loggedIn]);
 
   return (
     <div>
@@ -28,8 +28,11 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-          <Route path="/login">{loggedIn == true ? <Home /> : <Login />}</Route>
+          {/* <Route path="/login">{loggedIn == true ? <Home /> : <Login />}</Route> */}
         </AuthContextProvider>
       </Router>
     </div>
