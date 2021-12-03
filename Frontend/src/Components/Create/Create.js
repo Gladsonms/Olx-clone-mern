@@ -4,7 +4,10 @@ import Header from "../Header/Header";
 import axios from "axios";
 import { URL } from "../../Constants/api";
 
+import { useHistory } from "react-router-dom";
+
 const Create = () => {
+  let history = useHistory();
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
@@ -29,7 +32,11 @@ const Create = () => {
     let productdetails = { name, category, price, preivewSource };
     console.table(productdetails);
     try {
-      await axios.post(`${URL}/users/createpost`, productdetails);
+      await axios
+        .post(`${URL}/users/createpost`, productdetails)
+        .then((result) => {
+          history.push("/");
+        });
     } catch (error) {
       console.error(error);
     }

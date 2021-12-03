@@ -127,8 +127,19 @@ const createPost = async (req, res) => {
     });
 
     const savedProduct = await newPost.save();
+    res.status(200).json({ success: "true" });
   } catch (error) {
     console.error(error);
+  }
+};
+
+const getAllProducts = async (req, res) => {
+  try {
+    await Product.find({}, (err, products) => {
+      res.json({ products });
+    });
+  } catch (error) {
+    console.error(erroe);
   }
 };
 module.exports = {
@@ -137,4 +148,5 @@ module.exports = {
   logginIn,
   getLogoutUser,
   createPost,
+  getAllProducts,
 };
