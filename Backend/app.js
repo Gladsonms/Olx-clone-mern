@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const userRouter = require("./routes/userrouter");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
@@ -26,13 +27,28 @@ mongoose.connect(
   }
 );
 
-app.use(express.json());
+//app.use(express.json());
 app.use(
   cors(
     { origin: ["http://localhost:3000"], credentials: true },
     { httpOnly: true }
   )
 );
+
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "50mb",
+//     parameterLimit: 100000,
+//     extended: true,
+//   })
+// );
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: false,
+  })
+);
+app.use(bodyParser.json({ limit: "50mb" }));
 
 //set user Router
 

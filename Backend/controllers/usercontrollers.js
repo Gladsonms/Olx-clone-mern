@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const { response } = require("express");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
+const { cloudinary } = require("../utlis/cloundinary");
 
 //register a new user
 
@@ -103,18 +104,28 @@ const getLogoutUser = (req, res) => {
   }
 };
 const createPost = async (req, res) => {
-  const { name, category, price } = req.body;
+  const { name, category, price, preivewSource } = req.body;
+
   try {
-    if (!name || !category || !price) {
+    const uploadedResponse = await cloudinary.uploader.upload(preivewSource, {
+      upload_preset: "dev_setup",
+    });
+
+    let image = uploadedResponse.url;
+
+    if (!name || !category || !price || !image) {
       return res
         .status(400)
         .json({ errorMessage: "Please enter all required fiels" });
     }
+
     const newPost = new Product({
       product: name,
       category,
       price,
+      image,
     });
+
     const savedProduct = await newPost.save();
   } catch (error) {
     console.error(error);

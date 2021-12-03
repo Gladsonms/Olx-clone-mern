@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Create.css";
 import Header from "../Header/Header";
 import axios from "axios";
@@ -8,18 +8,36 @@ const Create = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
+  const [preivewSource, setPreviewSource] = useState("");
+  const [base64, Setbase64] = useState("");
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
 
   const createProducts = async (e) => {
     e.preventDefault();
 
-    let productdetails = { name, category, price };
+    uploadImage(preivewSource);
+
+    let productdetails = { name, category, price, preivewSource };
     console.table(productdetails);
     try {
       await axios.post(`${URL}/users/createpost`, productdetails);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const uploadImage = (base64EncodedImage) => {
+    // console.log(base64EncodedImage);
+    Setbase64(base64EncodedImage);
   };
 
   return (
@@ -69,14 +87,22 @@ const Create = () => {
             <br />
 
             <br />
-            <img alt="Posts" width="200px" height="200px" src=""></img>
+            {preivewSource && (
+              <img
+                alt="Posts"
+                width="200px"
+                height="200px"
+                src={preivewSource}
+              ></img>
+            )}
 
             <br />
             <input
               type="file"
-              value={image}
+              // value={image}
               onChange={(e) => {
-                setImage(e.target.value);
+                setImage(e.target.files[0]);
+                previewFile(e.target.files[0]);
               }}
             />
             <br />
